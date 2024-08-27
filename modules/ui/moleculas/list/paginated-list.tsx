@@ -17,9 +17,8 @@ export const PaginatedList = <T,>(props: PaginatedListProps<T>) => {
 const styles = StyleSheet.create({
     root: {
         marginTop: 12,
+        height: '80%',
     },
 
-    container: {
-        height: 400,
-    },
+    container: {},
 });

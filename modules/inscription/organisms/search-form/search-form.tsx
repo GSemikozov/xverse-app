@@ -1,10 +1,10 @@
-import { Form, Formik, FormikHelpers } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 import { StyleSheet, View } from 'react-native';
 
 import { TextInput, Button } from '@/modules/ui/moleculas';
-import { searchFormValidationSchema } from '@/modules/nft/model';
+import { searchFormValidationSchema } from '@/modules/inscription/model';
 
-import type { SearchFormValues } from '@/modules/nft/model';
+import type { SearchFormValues } from '@/modules/inscription/model';
 
 export type SearchFormProps = {
     onSubmit: (
@@ -17,7 +17,8 @@ export const SearchForm = (props: SearchFormProps) => {
     const { onSubmit } = props;
 
     const initialValues: SearchFormValues = {
-        address: '',
+        address:
+            'bc1pe6y27ey6gzh6p0j250kz23zra7xn89703pvmtzx239zzstg47j3s3vdvvs',
     };
 
     return (
@@ -32,7 +33,7 @@ export const SearchForm = (props: SearchFormProps) => {
                         formikProps;
 
                     return (
-                        <Form style={styles.form}>
+                        <View style={styles.form}>
                             <View style={styles.formRow}>
                                 <TextInput
                                     id="address"
@@ -46,7 +47,7 @@ export const SearchForm = (props: SearchFormProps) => {
                             <View style={styles.formRow}>
                                 <Button title="Look Up" onPress={submitForm} />
                             </View>
-                        </Form>
+                        </View>
                     );
                 }}
             </Formik>

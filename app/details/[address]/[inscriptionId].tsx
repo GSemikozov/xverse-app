@@ -1,47 +1,129 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import {
+    View,
+    Text,
+    ActivityIndicator,
+    StyleSheet,
+    ScrollView,
+} from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { useGetInscriptionDetailsQuery } from '../../../modules/api/ordinal-utxo';
+
+import { useGetInscriptionQuery } from '@/modules/api';
 import { DetailsScreenRouteProp } from '@/app/types';
+import { colors } from '@/modules/ui/constants';
+import { InscriptionContent } from '@/modules/inscription/moleculas';
+import { DetailItem, DetailsGroup } from '@/modules/layout/moleculas';
 
 const Details = () => {
-    const route = useRoute<DetailsScreenRouteProp>();
-    const { address, inscriptionId } = route.params;
+    const {
+        params: { address, inscriptionId },
+    } = useRoute<DetailsScreenRouteProp>();
 
-    const { data, error, isLoading } = useGetInscriptionDetailsQuery({
+    const {
+        data: inscription,
+        error,
+        isLoading,
+    } = useGetInscriptionQuery({
         address,
         inscriptionId,
     });
 
-    if (isLoading) return <Text>Loading...</Text>;
-    if (error) return <Text>Error loading inscription details</Text>;
+    if (isLoading) {
+        return <ActivityIndicator />;
+    }
 
-    const renderContent = () => {
-        if (!data) return null;
+    if (error) {
+        return (
+            <Text style={styles.error}>Error loading inscription details</Text>
+        );
+    }
 
-        const contentUrl = `https://ord.xverse.app/content/${inscriptionId}`;
+    if (!inscription) {
+        return (
+            <Text style={styles.error}>Empty data for this inscription</Text>
+        );
+    }
 
-        switch (data.mime_type) {
-            case 'image/jpeg':
-            case 'image/png':
-            case 'image/gif':
-                return (
-                    <Image
-                        source={{ uri: contentUrl }}
-                        style={{ width: '100%', height: 300 }}
-                        resizeMode="contain"
-                    />
-                );
-            case 'text/html':
-            case 'text/plain':
-            case 'application/json':
-                return <Text style={{ color: 'white' }}>{data?.address}</Text>; // we can display all fields here
-            default:
-                return <Text>Unsupported content type: {data.mime_type}</Text>;
-        }
-    };
+    return (
+        <ScrollView>
+            <InscriptionContent inscription={inscription} />
 
-    return <View style={{ padding: 16 }}>{renderContent()}</View>;
+            <View style={styles.header}>
+                <Text numberOfLines={1} style={styles.headerTitle}>
+                    Inscription {inscriptionId}
+                </Text>
+            </View>
+
+            <DetailsGroup style={styles.shortDetailsGroup}>
+                <DetailItem
+                    variant="outlined"
+                    label="Inscription ID"
+                    content={inscription.id}
+                />
+
+                <DetailItem
+                    variant="outlined"
+                    label="Owner Address"
+                    content={address}
+                />
+            </DetailsGroup>
+
+            <DetailsGroup label="Attributes">
+                <DetailItem label="Output Value" content={inscription.value} />
+
+                <DetailItem label="Mime Type" content={inscription.mime_type} />
+
+                <DetailItem
+                    label="Content Type"
+                    content={inscription.content_type}
+                />
+
+                <DetailItem
+                    label="Content Length"
+                    content={inscription.content_length}
+                />
+
+                <DetailItem label="Location" content={inscription.location} />
+
+                <DetailItem
+                    label="Genesis Transaction"
+                    content={inscription.genesis_tx_id}
+                />
+
+                <DetailItem
+                    label="Genesis Address"
+                    content={inscription.genesis_address}
+                />
+            </DetailsGroup>
+        </ScrollView>
+    );
 };
+
+const styles = StyleSheet.create({
+    root: {},
+
+    error: {
+        color: colors.white[100],
+    },
+
+    header: {
+        paddingTop: 24,
+        paddingBottom: 16,
+        marginBottom: 24,
+
+        borderBottomWidth: 2,
+        borderBottomColor: colors.purple[100],
+    },
+
+    headerTitle: {
+        color: colors.white[100],
+        fontSize: 16,
+        fontFamily: 'Montserrat-600',
+    },
+
+    shortDetailsGroup: {
+        marginBottom: 48,
+    },
+});
 
 export default Details;

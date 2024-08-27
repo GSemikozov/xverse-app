@@ -38,7 +38,6 @@ export const ListItem = (props: ListItemProps) => {
 const styles = StyleSheet.create({
     root: {
         display: 'flex',
-        flexWrap: 'wrap',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',

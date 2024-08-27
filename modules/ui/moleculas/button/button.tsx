@@ -26,6 +26,9 @@ export const Button = (props: ButtonProps) => {
 
 const styles = StyleSheet.create({
     button: {
+        display: 'flex',
+        justifyContent: 'center',
+
         height: 46,
         backgroundColor: colors.purple[90],
         borderRadius: 10,
@@ -36,14 +39,9 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%',
-
         color: colors.white[100],
         fontSize: 14,
         fontFamily: 'Montserrat-500',
+        textAlign: 'center',
     },
 });

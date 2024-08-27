@@ -21,6 +21,8 @@ export type ApiOrdinalUtxo = {
 
 export type ApiOrdinalsUtxoPayload = {
     address: string;
+
+    offset?: number;
 };
 
 export type ApiOrdinalsUtxoResponse = {
@@ -30,12 +32,12 @@ export type ApiOrdinalsUtxoResponse = {
     results: ApiOrdinalUtxo[];
 };
 
-export interface ApiInscriptionDetailPayload {
+export type ApiInscriptionPayload = {
     address: string;
     inscriptionId: string;
-}
+};
 
-export interface ApiInscriptionDetailResponse {
+export type ApiInscriptionResponse = {
     id: string;
     number: number;
     address: string;
@@ -57,4 +59,4 @@ export interface ApiInscriptionDetailResponse {
     tx_id: string;
     timestamp: number;
     value: number;
-}
+};

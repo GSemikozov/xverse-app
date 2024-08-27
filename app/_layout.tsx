@@ -42,6 +42,9 @@ const RootLayout = () => {
 
         'Montserrat-500': require('../assets/fonts/montserrat-latin-500-normal.ttf'),
         'Montserrat-500-italic': require('../assets/fonts/montserrat-latin-500-italic.ttf'),
+
+        'Montserrat-600': require('../assets/fonts/montserrat-latin-600-normal.ttf'),
+        'Montserrat-600-italic': require('../assets/fonts/montserrat-latin-600-italic.ttf'),
     });
 
     React.useEffect(() => {
@@ -71,6 +74,7 @@ const RootLayout = () => {
                         title: 'Details',
                         headerShown: true,
                         headerBackVisible: true,
+                        headerBackTitleVisible: false,
                     }}
                 />
 

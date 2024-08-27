@@ -1,6 +1,9 @@
+import { rgba } from 'polished';
+
 export const colors = {
     white: {
         100: '#fff',
+        70: rgba(255, 255, 255, 0.7),
     },
 
     black: {

@@ -3,8 +3,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
     ApiOrdinalsUtxoPayload,
     ApiOrdinalsUtxoResponse,
-    ApiInscriptionDetailPayload,
-    ApiInscriptionDetailResponse,
+    ApiInscriptionPayload,
+    ApiInscriptionResponse,
 } from './types';
 
 export const ordinalUtxoApi = createApi({
@@ -17,17 +17,21 @@ export const ordinalUtxoApi = createApi({
             ApiOrdinalsUtxoResponse,
             ApiOrdinalsUtxoPayload
         >({
-            query: ({ address }) => ({
+            query: ({ address, offset = 0 }) => ({
                 url: `/address/${address}/ordinal-utxo`,
                 method: 'GET',
+                params: {
+                    offset,
+                },
                 headers: {
                     'Content-Type': 'application/json',
                 },
             }),
         }),
-        getInscriptionDetails: builder.query<
-            ApiInscriptionDetailResponse,
-            ApiInscriptionDetailPayload
+
+        getInscription: builder.query<
+            ApiInscriptionResponse,
+            ApiInscriptionPayload
         >({
             query: ({ address, inscriptionId }) => ({
                 url: `/address/${address}/ordinals/inscriptions/${inscriptionId}`,
@@ -40,5 +44,5 @@ export const ordinalUtxoApi = createApi({
     }),
 });
 
-export const { useGetOrdinalsUtxoQuery, useGetInscriptionDetailsQuery } =
+export const { useGetOrdinalsUtxoQuery, useGetInscriptionQuery } =
     ordinalUtxoApi;
