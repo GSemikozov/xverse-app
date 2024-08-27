@@ -1,4 +1,4 @@
-# Xverse assasement (full-stack with focus on frontend) built via expo 👋
+# Xverse assessment (full-stack with focus on frontend) built via expo 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
